@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import com.udacity.loadapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -28,10 +29,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+        notificationManager = ContextCompat.getSystemService(this@MainActivity, NotificationManager::class.java) as NotificationManager
 
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
         binding.contentMain.customButton.setOnClickListener {
+            binding.contentMain.customButton.setState(ButtonState.Clicked)
             download()
         }
     }
@@ -43,8 +46,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun download() {
+        binding.contentMain.customButton.setState(ButtonState.Loading)
         val request =
-            DownloadManager.Request(Uri.parse(URL))
+            DownloadManager.Request(Uri.parse(LOAD_APP_URL))
                 .setTitle(getString(R.string.app_name))
                 .setDescription(getString(R.string.app_description))
                 .setRequiresCharging(false)
@@ -52,12 +56,14 @@ class MainActivity : AppCompatActivity() {
                 .setAllowedOverRoaming(true)
 
         val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-        downloadID =
-            downloadManager.enqueue(request) // enqueue puts the download request in the queue.
+        downloadID = downloadManager.enqueue(request) // enqueue puts the download request in the queue.
     }
 
     companion object {
-        private const val URL = "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/master.zip"
+        private const val LOAD_APP_URL = "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/master.zip"
+        private const val GLIDE_URL = "https://github.com/bumptech/glide/archive/master.zip"
+        private const val RETROFIT_URL = "https://github.com/square/retrofit/archive/master.zip"
+
         private const val CHANNEL_ID = "channelId"
     }
 }
