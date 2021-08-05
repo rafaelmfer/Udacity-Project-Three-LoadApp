@@ -10,4 +10,23 @@
     <string name="button_name">Click me</string>
     <string name="button_loading">We are loading </string>
     <string name="title_activity_detail">DetailActivity</string>
+
+    <string name="load_app_channel_id" translatable="false">load_app_channel</string>
+    <string name="load_app_channel_name" translatable="false">Load</string>
+    <string name="load_app_channel_description" translatable="false">Repository download</string>
+
+    <string name="glide_option">Glide - Image Loading Library by BumpTech</string>
+    <string name="glide_option_description">Download Glide files from Internet</string>
+
+    <string name="load_app_option">LoadApp - Current repository by Udacity</string>
+    <string name="load_app_option_description">Download LoadApp files from Internet</string>
+
+    <string name="retrofit_option">Retrofit - Type-safe HTTP client for Android and Java by Square, Inc</string>
+    <string name="retrofit_option_description">Download Retrofit files from Internet</string>
+
+    <string name="empty_option">Please select the file to download</string>
+
+    <string name="file_name">File name:</string>
+    <string name="status">Status:</string>
+    <string name="ok">OK</string>
 </resources>
