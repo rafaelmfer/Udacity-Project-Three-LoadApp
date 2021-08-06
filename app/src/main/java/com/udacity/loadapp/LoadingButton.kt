@@ -31,6 +31,7 @@ class LoadingButton @JvmOverloads constructor(
     private var heightSize = 0
 
     private var currentWidth = 0
+    private var sweepAngle = 0F
 
     private var text = ""
     private var buttonTextColor: Int = 0
@@ -48,10 +49,12 @@ class LoadingButton @JvmOverloads constructor(
                 valueAnimator.repeatCount = ValueAnimator.INFINITE
                 valueAnimator.duration = 1000L
                 valueAnimator.setValues(
-                    PropertyValuesHolder.ofInt("rect", 0, widthSize)
+                    PropertyValuesHolder.ofInt("rect", 0, widthSize),
+                    PropertyValuesHolder.ofFloat("arc", 0F, 360F)
                 )
                 valueAnimator.addUpdateListener {
                     currentWidth = it.getAnimatedValue("rect") as Int
+                    sweepAngle = it.getAnimatedValue("arc") as Float
                     invalidate()
                 }
                 valueAnimator.addListener(object : AnimatorListenerAdapter() {
@@ -152,7 +155,7 @@ class LoadingButton @JvmOverloads constructor(
         canvas?.drawArc(
             rectF,
             0F,
-            360F,
+            sweepAngle,
             true,
             paint
         )
