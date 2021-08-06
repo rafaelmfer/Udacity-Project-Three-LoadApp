@@ -10,8 +10,10 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.PointF
 import android.graphics.Rect
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.ContextCompat
 import kotlin.properties.Delegates
 
 class LoadingButton @JvmOverloads constructor(
@@ -93,13 +95,8 @@ class LoadingButton @JvmOverloads constructor(
             is ButtonState.Loading -> {
                 text = context.getString(R.string.button_loading)
                 drawTextButton(canvas)
-                canvas?.drawRect(
-                    0f,
-                    0f,
-                    currentWidth.toFloat(),
-                    heightSize.toFloat(),
-                    paint
-                )
+                drawRectLoading(canvas)
+                drawArcLoading(canvas)
             }
             ButtonState.Completed -> {
                 text = context.getString(R.string.button_name)
@@ -132,6 +129,33 @@ class LoadingButton @JvmOverloads constructor(
     private fun PointF.computeXYForText(textRect: Rect) {
         x = widthSize.toFloat() / 2
         y = heightSize.toFloat() / 2 - textRect.centerY()
+    }
+
+    private fun drawRectLoading(canvas: Canvas?) {
+        canvas?.drawRect(
+            0f,
+            0f,
+            currentWidth.toFloat(),
+            heightSize.toFloat(),
+            paint
+        )
+    }
+
+    private fun drawArcLoading(canvas: Canvas?) {
+        paint.color = ContextCompat.getColor(context, R.color.yellow_400)
+
+        val rectF = RectF()
+        val circleDiameter = 60.0f
+        val circleSize = heightSize - paddingBottom - circleDiameter
+        rectF.set(circleDiameter, circleDiameter, circleSize, circleSize)
+
+        canvas?.drawArc(
+            rectF,
+            0F,
+            360F,
+            true,
+            paint
+        )
     }
 
     private fun drawBackgroundButton(canvas: Canvas?) {
