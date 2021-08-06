@@ -11,7 +11,7 @@ import androidx.core.app.NotificationCompat
 import java.io.Serializable
 
 private const val NOTIFICATION_ID = 5460
-private const val NOTIFICATION_BODY = "NOTIFICATION_BODY"
+const val NOTIFICATION_BODY = "NOTIFICATION_BODY"
 
 class NotificationBody(val title: String, val status: String, val description: String) : Serializable
 

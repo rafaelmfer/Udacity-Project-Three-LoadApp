@@ -17,5 +17,22 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+
+        notificationManager.cancelNotifications()
+
+        val notification = intent.getSerializableExtra(NOTIFICATION_BODY) as NotificationBody
+        binding.contentDetail.tvFileName.text = notification.title
+        binding.contentDetail.tvStatus.text = notification.status
+
+        when (notification.status) {
+            getString(R.string.success) ->
+                binding.contentDetail.tvStatus.setTextColor(ContextCompat.getColor(this, R.color.green_A700))
+            getString(R.string.failed) ->
+                binding.contentDetail.tvStatus.setTextColor(ContextCompat.getColor(this, R.color.red_400))
+        }
+
+        binding.contentDetail.mbtDetailsOk.setOnClickListener {
+            onBackPressed()
+        }
     }
 }
